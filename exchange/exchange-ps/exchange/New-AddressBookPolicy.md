@@ -23,7 +23,12 @@ For information about the parameter sets in the Syntax section below, see [Excha
 ## SYNTAX
 
 ```
-New-AddressBookPolicy [-Name] <String> -AddressLists <AddressListIdParameter[]> -GlobalAddressList <GlobalAddressListIdParameter> -OfflineAddressBook <OfflineAddressBookIdParameter> -RoomList <AddressListIdParameter>
+New-AddressBookPolicy
+ [-Name] <String>
+ [-AddressLists[ <AddressListIdParameter[]>
+ [-GlobalAddressList] <GlobalAddressListIdParameter>
+ [-OfflineAddressBook] <OfflineAddressBookIdParameter>
+ [-RoomList] <AddressListIdParameter>
  [-Confirm]
  [-DomainController <Fqdn>]
  [-WhatIf]
@@ -115,7 +120,11 @@ Accept wildcard characters: False
 ```
 
 ### -RoomList
-The RoomList parameter specifies the room address list that will be used by mailbox users who are assigned this address book policy. You can specify only one room list for each address book policy.
+The RoomList parameter specifies the name of the [address list](../powershell/module/exchange/new-addresslist.md) to be applied when returning resource mailboxes, such as rooms.  Address lists contains a RecipientFilter property.  Users assigned to a given address book policy will only be able to see resources that match the RecipientFilter property in the address list provided in this RoomList property.
+ 
+You can specify only address list in this RoomList property.  The difference between this RoomList property and the AddressLists property is that the RoomList property is used to manage access to resource mailboxes.  Experiences that show resources, such as searching for a location when creating a calendar event, will only check the address list provided in this RoomList property.  These experiences do not check the address lists provided in the AddressLists property.  _Note: When searching for mailboxes in To, Cc, or Bcc fields that are not specific to resources, the values provided in the AddressLists property apply rather than from this RoomList property._
+
+[!Warning] The RoomList property is not related to the room lists that contain resoruces as members.https://learn.microsoft.com/en-us/exchange/recipients/room-mailboxes?view=exchserver-2019#create-a-room-list
 
 ```yaml
 Type: AddressListIdParameter
